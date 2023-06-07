@@ -9,28 +9,28 @@ Automação de Vending Machine
 
 Programa para automatizar o funcionamento de uma vending machine.
 
-modo usuário
--	listar produtos e valores
--	usuário escolhe o produto
--	usuário informa o valor inserido na máquina
--	verifica estoque do ítem escolhido
--	retira o produto
--	verifica se existe troco
--	retira o troco
+#####Modo Usuário
+-	Listar produtos e valores
+-	Usuário escolhe o produto
+-	Usuário informa o valor inserido na máquina
+-	Verifica estoque do ítem escolhido
+-	Retira o produto
+-	Verifica se existe troco
+-	Retira o troco
 	
-modo administrador
--	listar estoque
--	listar faturamento
--	listar faturamento previsto
+#####Modo Administrador
+-	Listar estoque
+-	Listar faturamento
+-	Listar faturamento previsto
 
-Critérios de Avaliação
+#####Critérios de Avaliação:
 
 Rubrica de avaliação (o que será avaliado no seu código-fonte):
-Você deve publicar seu projeto no github contendo a identicação (RA/Nome) dos
+- Você deve publicar seu projeto no github contendo a identicação (RA/Nome) dos
 autores no arquivo README.
-• Para entregar seu projeto você deve acessar a respectiva tarefa no Teams e submeter
+- Para entregar seu projeto você deve acessar a respectiva tarefa no Teams e submeter
 o link (público) do projeto do github.
-• A data de entrega está especificada na respectiva tarefa no Teams.
+- A data de entrega está especificada na respectiva tarefa no Teams.
 
 1. Código-fonte identicado.
 2. Código-fonte formatado.
