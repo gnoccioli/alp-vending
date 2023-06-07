@@ -9,7 +9,7 @@ Automação de Vending Machine
 
 Programa para automatizar o funcionamento de uma vending machine.
 
-#####Modo Usuário
+##### Modo Usuário
 -	Listar produtos e valores
 -	Usuário escolhe o produto
 -	Usuário informa o valor inserido na máquina
@@ -18,12 +18,12 @@ Programa para automatizar o funcionamento de uma vending machine.
 -	Verifica se existe troco
 -	Retira o troco
 	
-#####Modo Administrador
+##### Modo Administrador
 -	Listar estoque
 -	Listar faturamento
 -	Listar faturamento previsto
 
-#####Critérios de Avaliação:
+##### Critérios de Avaliação:
 
 Rubrica de avaliação (o que será avaliado no seu código-fonte):
 - Você deve publicar seu projeto no github contendo a identicação (RA/Nome) dos
