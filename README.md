@@ -17,7 +17,7 @@ modo usuário
 -	retira o produto
 -	verifica se existe troco
 -	retira o troco
--	
+	
 modo administrador
 -	listar estoque
 -	listar faturamento
