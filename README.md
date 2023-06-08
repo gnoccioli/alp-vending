@@ -20,6 +20,7 @@ Programa para automatizar o funcionamento de uma vending machine.
 	
 ##### Modo Administrador
 -	Listar estoque
+-	Abastecer Produtos
 -	Listar faturamento
 -	Listar faturamento previsto
 
