@@ -5,9 +5,31 @@
 
 using namespace std;
 
-void menu_usuario(int i, int j, int produtos[lin][col])
+int menu_usuario(int i, int j, int produtos[lin][col]);
+void inserir_valores_adm(int i, int j, int produtos[lin][col]);
+void lista_produtos_adm(int i, int j, int produtos[lin][col]);
+void menu_adm(int i, int j, int produtos[lin][col]);
+void compra(int i, int j, int produtos[lin][col], int pescolha);
+
+int main()
+{
+	int i, j;
+	int k = 0;
+	int produtos[lin][col];
+
+	menu_usuario(i, j , produtos);
+	
+	cout << endl;
+		
+	system("pause");
+	return 0;
+}
+
+int menu_usuario(int i, int j, int produtos[lin][col])
 {
 	int escolha;
+	int pescolha;
+	
 	system("cls");
 	cout << "\t\tBem vindo!" << endl;
 	cout << "\t* * * LISTA DE PRODUTOS * * *" << endl;
@@ -24,10 +46,13 @@ void menu_usuario(int i, int j, int produtos[lin][col])
 	
 	if (escolha == 0)
 		menu_adm(i, j, produtos);
+	if (escolha > 0)
+		compra(i, j, produtos, pescolha);
+		
 		
 	system("pause");
+	return escolha;
 }
-
 
 void inserir_valores_adm(int i, int j, int produtos[lin][col])
 {
@@ -98,7 +123,23 @@ void menu_adm(int i, int j, int produtos[lin][col])
 	}while(op_adm != 3);
 }
 
-
-
-int main()
+void compra(int i, int j, int produtos[lin][col], int pescolha)
 {
+	int escolha_confirma;
+	int escolha;
+	
+	system("cls");
+		
+	cout << "Confirme a sa escolha:";
+	cin >> escolha_confirma;
+	
+	if(escolha_confirma != pescolha)
+	{
+		cout << "A confirmacao da opcao nao bate com a primeira opcao! Refaça a escolha.";
+		menu_usuario(i, j, produtos);
+	}
+	else
+		cout << "Ainda sem opcao";
+	
+	system("pause");
+}
