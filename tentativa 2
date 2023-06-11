@@ -1,57 +1,138 @@
 #include<iostream>
 
-#define col 3
 #define lin 2
+#define col 3
 
 using namespace std;
 
-int menu_usuario(int i, int j, int produtos[lin][col]);
+void menu_principal(int i, int j, int produtos[lin][col]);
+void menu_compra(int i, int j, int produtos[lin][col], int escolha);
+void efetiva_compra(int i, int j, int produtos[lin][col], int escolha_confirma);
+
+void menu_adm(int i, int j, int produtos[lin][col]);
 void inserir_valores_adm(int i, int j, int produtos[lin][col]);
 void lista_produtos_adm(int i, int j, int produtos[lin][col]);
-void menu_adm(int i, int j, int produtos[lin][col]);
-void compra(int i, int j, int produtos[lin][col], int pescolha);
 
 int main()
 {
 	int i, j;
-	int k = 0;
 	int produtos[lin][col];
-
-	menu_usuario(i, j , produtos);
 	
-	cout << endl;
-		
+	menu_principal(i, j, produtos);
+	
 	system("pause");
 	return 0;
 }
 
-int menu_usuario(int i, int j, int produtos[lin][col])
+void menu_principal(int i, int j, int produtos[lin][col])
 {
 	int escolha;
-	int pescolha;
+	do
+	{
+		system("cls");
+		cout << "\t\tBem vindo!" << endl;
+		cout << "\t* * * LISTA DE PRODUTOS * * *" << endl;
+		cout << "\t\t#Produto *  Valor" << endl;	
+		
+			for(i=0; i<1; i++)
+				for (j=0; j<col; j++)
+				{
+					cout << "\t\t#" << j+1 << " * R$ " << produtos[i][j] << endl;
+				}
+				
+		cout << "Digite o produto desejado:";
+		cin >> escolha;
+		if (escolha >= 1 && escolha <9)
+			menu_compra(i, j, produtos, escolha);
+		if (escolha == 9)
+			menu_adm(i, j, produtos);
+			cout << "sem menu" << endl;
+	}while (escolha != 0);
+	system("cls");
+	cout << "Obrigado e volte sempre.";
+	
+}
+void menu_compra(int i, int j, int produtos[lin][col], int escolha)
+{
+	system("cls");
+	int escolha_confirma;
+	int escolha_produtos;
+		
+	cout << "Confirme a sa escolha:";
+	cin >> escolha_confirma;
+	
+	if(escolha_confirma != escolha)
+	{
+		cout << endl << endl << "A confirmacao da opcao nao bate com a primeira opcao! Refaca a escolha." << endl << endl;
+		system("pause");
+		menu_principal(i, j, produtos);
+		system("pause");
+	}
+	else
+		efetiva_compra(i, j, produtos, escolha_produtos);
+	system("pause");
+}
+
+void efetiva_compra(int i, int j, int produtos[lin][col], int escolha_confirma)
+{
+	double valor_produto, valor_inserido, valor_troco;
+	char resposta;
+	
+	do
+	{
+		system("cls");
+		for(i=0; i<lin; i++)
+			for(j=0; j<col; j++)
+				{
+					if (escolha_confirma == produtos[i][col])
+						valor_produto = produtos[i][j];
+				}
+				
+		cout << "O valor do produto " << i << "e de R$" << valor_produto << "." << endl;
+		cout << "Insira dinheiro (valor): ";
+		cin >> valor_inserido;
+		
+		if (valor_inserido > valor_produto)
+			{
+				valor_troco = valor_inserido - valor_produto;
+				cout << "O valor do produto e R$" << valor_produto << " e o valor inserido e R$" << valor_inserido << "." << endl << "* * Seu troco e de R$" << valor_troco << ". * *" << endl;
+				cout << "Retire o produto e o seu troco abaixo" << endl;
+			}
+		else
+			cout << "O valor inserido e inferior ao valor do produto, deseja continuar comprando?" << endl << "[S] - SIM;" << endl << "[N] - NAO;" << endl << "R:";
+			cin >> resposta;
+			
+	}while (resposta != 'N' || resposta == 'S');
+	cout << "Obrigado pela preferencia, volte sempre!" << endl;
+	system("pause");
+	menu_principal(i, j, produtos);
+}
+
+void menu_adm(int i, int j, int produtos[lin][col])
+{
+	int op_adm;
 	
 	system("cls");
-	cout << "\t\tBem vindo!" << endl;
-	cout << "\t* * * LISTA DE PRODUTOS * * *" << endl;
-	cout << "\t\t#Produto *  Valor" << endl;	
-	
-		for(i=0; i<1; i++)
-			for (j=0; j<col; j++)
-			{
-				cout << "\t\t#" << j+1 << " * R$ " << produtos[i][j] << endl;
-			}
-	
-	cout << "Digite o produto desejado:";
-	cin >> escolha;
-	
-	if (escolha == 0)
-		menu_adm(i, j, produtos);
-	if (escolha > 0)
-		compra(i, j, produtos, pescolha);
+	do
+	{
+		system("cls");
+		cout << "* * * MENU ADMINISTRADOR * * *" << endl;
+		cout << "[1] - Inserir valores e quantidades;" << endl << "[2] - Imprimir lista de produtos com valores e quantidades" << endl << "[3] - Voltar ao sistema usuario;" << endl;
+		cin >> op_adm;
 		
-		
-	system("pause");
-	return escolha;
+		switch(op_adm)
+		{
+			case 1:
+				inserir_valores_adm(i, j, produtos);
+				break;
+			case 2:
+				lista_produtos_adm(i, j, produtos);
+				break;
+			case 3:
+				menu_principal(i, j, produtos);
+				break;				
+		}
+	}while(op_adm != 3);
 }
 
 void inserir_valores_adm(int i, int j, int produtos[lin][col])
@@ -96,50 +177,5 @@ void lista_produtos_adm(int i, int j, int produtos[lin][col])
 	system("pause");
 }
 
-void menu_adm(int i, int j, int produtos[lin][col])
-{
-	int op_adm;
-	
-	system("cls");
-	do
-	{
-		system("cls");
-		cout << "* * * MENU ADMINISTRADOR * * *" << endl;
-		cout << "[1] - Inserir valores e quantidades;" << endl << "[2] - Imprimir lista de produtos com valores e quantidades" << endl << "[3] - Voltar ao sistema usuario;" << endl;
-		cin >> op_adm;
-		
-		switch(op_adm)
-		{
-			case 1:
-				inserir_valores_adm(i, j, produtos);
-				break;
-			case 2:
-				lista_produtos_adm(i, j, produtos);
-				break;
-			case 3:
-				menu_usuario(i, j, produtos);
-				break;				
-		}
-	}while(op_adm != 3);
-}
 
-void compra(int i, int j, int produtos[lin][col], int pescolha)
-{
-	int escolha_confirma;
-	int escolha;
-	
-	system("cls");
-		
-	cout << "Confirme a sa escolha:";
-	cin >> escolha_confirma;
-	
-	if(escolha_confirma != pescolha)
-	{
-		cout << "A confirmacao da opcao nao bate com a primeira opcao! Refaça a escolha.";
-		menu_usuario(i, j, produtos);
-	}
-	else
-		cout << "Ainda sem opcao";
-	
-	system("pause");
-}
+
