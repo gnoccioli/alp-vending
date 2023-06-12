@@ -17,9 +17,9 @@ Na interface de usuário, o programa vai exibir os produtos e quantidades dispon
 O usuário pode informar o código do produto desejado, digitar fim para sair do programa
 ou digitar adm para acessar o menu de administração.  
 
-O programa irá verificar se o código de produto informado pelo usuário é válido.  
+Ao um código de produto nessa interface,  programa irá verificar se o código informado pelo usuário é válido.  
 Sendo um código de produto válido, será solicitado ao usuário informar o valor do pagamento.  
-Para o valor, deverá ser utilizado . (ponto) como separador decimal.  
+Para o valor, deverá ser utilizado . (ponto) como separador decimal, caso não seja um valor inteiro.  
 Caso o valor não seja suficiente, o usuário deverá complementar (em uma vending machine é inserida uma nota de cada vez).  
   
 Ao realizar a venda, o programa verificará:
