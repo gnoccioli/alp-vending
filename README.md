@@ -14,7 +14,7 @@ Caso não existam produtos em estoque, será solicitada a senha de administrador
   
 ### Interface de Usuário  
 Na interface de usuário, o programa vai exibir os produtos e quantidades disponíveis.  
-O usuário pode informar o código do produto desejado, ou digitar fim para sair do programa
+O usuário pode informar o código do produto desejado, digitar fim para sair do programa
 ou digitar adm para acessar o menu de administração.  
 
 O programa irá verificar se o código de produto informado pelo usuário é válido.  
