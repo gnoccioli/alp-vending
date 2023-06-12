@@ -1,7 +1,7 @@
 #include <iostream>
-#include <cstdlib>
-#include <limits>
-#include <iomanip>
+#include <cstdlib>  // biblioteca utilizada pela função limpaTela
+#include <limits>   // biblioteca utilizada para sanitizar as entradas de usuário
+#include <iomanip>  // biblioteca utilizada para formatar as saídas de dados na tela
 
 using namespace std;
 
@@ -18,17 +18,17 @@ void relatorioFinanceiro();
 void retiraSaldo(double& valorTotalVendas);
 
 
-const int MAX_PRODUTO = 50;
-const string ADMIN_PASSWORD = "admin";
+const int MAX_PRODUTO = 50; // indica a quantidade máxima de diferentes produtos que a Vending Machine poderá ter
+const string ADMIN_PASSWORD = "admin"; // indica qual senha deverá ser digitada para acecssar o menu de administração
 
 struct Produto {
     int codigo;
     string nome;
     double valor;
     int quantidade;
-};
+}; // cria a estrutura de dados para receber as informações dos produtos
 
-Produto produto[MAX_PRODUTO];
+Produto produto[MAX_PRODUTO]; //cria um vetor do tipo Produto para armazenar as informações dos produtos
 int conta_produto = 0; // mantem registro de quantos produtos estão cadastrados
 double valorTotalVendas = 0.0; // Variável para armazenar o valor total das vendas realizadas
 
@@ -206,17 +206,14 @@ void cadastroProdutos() {
 
         // Verifica se o usuário deseja sair do cadastro de produtos
         if (entrada == "fim"){
-			limpaTela()
+			limpaTela();
            break;
 		}
-        // Verifica se o código digitado é válido
-        /*if (entrada.length() != 2 || !isdigit(entrada[0]) || !isdigit(entrada[1])) {
-            cout << "Código inválido. Tente novamente." << endl;
-            continue;
-        }*/
 
+		// O valor informado pelo usuário é convertivo de str para int.
+		// Se resultar em erro, é solicitada nova entrada de dados.
 		try {
-			codigo = stoi(entrada);
+			codigo = stoi(entrada); 
 			}
 		catch (const invalid_argument& e) {
 			cout << "Entrada inválida." << endl;
@@ -246,6 +243,7 @@ void cadastroProdutos() {
 			continue;
 		}
 		
+		// Estando tudo ok com o código informado, procede com o cadastramento do produto.
         cout << "Digite o nome do produto: ";
         getline(cin, nome);
 
@@ -257,13 +255,13 @@ void cadastroProdutos() {
         cin >> quantidade;
         cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Limpa o buffer de entrada
         
-        // Realiza o cadastro do produto
+        // Realiza o cadastro do produto na struct
         produto[conta_produto].codigo = codigo;
         produto[conta_produto].nome = nome;
         produto[conta_produto].valor = valor;
         produto[conta_produto].quantidade = quantidade;
         
-        conta_produto++;
+        conta_produto++; // variável para acompanhar a quantidade de produtos cadastrados
         
         cout << "Produto cadastrado com sucesso!" << endl;
     }
@@ -281,8 +279,8 @@ void vendaProduto(int codigo) {
 
     if (indiceProduto == -1) {
         cout << "Produto não encontrado. Aperte enter para continuar" << endl;
-		cin.ignore(numeric_limits<streamsize>::max(), '\n');
-		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		cin.ignore(numeric_limits<streamsize>::max(), '\n'); // pausa a tela para o usuário ler a mensagem aguardando Enter para continuar
+		cin.ignore(numeric_limits<streamsize>::max(), '\n'); // não consegui identificar o motivo, mas apenas 1 instrução não pausava a tela.
         return;
     }
 
@@ -298,7 +296,7 @@ void vendaProduto(int codigo) {
 
     cout << "Produto selecionado: " << produtoVendido.nome << endl;
 
-    // Solicitar valor inserido na máquina
+    // Solicitar ao usuário para inserir o dinheiro na máquina
     double valorInserido = 0.0;
     double valorTotal = 0.0;
     while (valorTotal < produtoVendido.valor) {
@@ -321,47 +319,49 @@ void vendaProduto(int codigo) {
         valorTotal += valor;
     }
 
-    // Calcular troco (se houver)
+    // Calcula o troco 
     double troco = valorTotal - produtoVendido.valor;
 
-    // Atualizar estoque
+    // Atualiza estoque
     produto[indiceProduto].quantidade--;
 
-	// Atualizar o valor total das vendas
+	// Atualiza o valor total das vendas
     valorTotalVendas += produtoVendido.valor;
 
-    // Imprimir mensagem de sucesso
     cout << "Compra realizada com sucesso!" << endl;
 
-    // Imprimir troco (se houver)
+    // Verifica se já troco e mprime a mensagem correspondente
     if (troco > 0) {
         cout << "Troco: R$" << fixed << setprecision(2) << troco << endl;
         cout << "Retire o troco." << endl;
     }
 
-    // Solicitar ao usuário que retire o produto
     cout << "Retire o produto." << endl;
     cout << "Pressione Enter para continuar...";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-	//usuario();
 	return;
 }
 
-
+// Interface do modo usuário - essa interface abre por padrão, exceto se não tiver estoque dos produtos.
 int usuario() {
     int codigo;
+	
+	 // O valor recebido do usuário será do tipo str para permitir os comandos fim e adm
+	 // Verificando que não ocorreu nenhuma dessas entradas, o valor será convertido para int
 	string entrada;
 
 	limpaTela();
     bemVindo();
-    estoque(false); //O parâmetro false indica que a função não foi chamada pelo administrador
-
+	
+	// A função estoque vai verificar o estoque e imprimir na tela os produtos disponíveis para o usuário efetuar a compra
+    estoque(false); // o parâmetro false indica que a função não foi chamada pelo administrador
 
     cout << "Digite o código do produto desejado (ou 'fim' para encerrar): ";
 
 	cin >> entrada;
 
+	// Na interface do usuário, pode-se utilizar a entrada adm para acessar a interface de Administração
 	if (entrada == "adm") {
 		administracao();
 		return usuario();
@@ -372,6 +372,8 @@ int usuario() {
 		return -1;
 	}
 
+	// O valor informado pelo usuário é convertivo de str para int.
+	// Se resultar em erro, é solicitada nova entrada de dados.
 	try {
 		codigo = stoi(entrada);
 	} catch (...) {
@@ -389,10 +391,12 @@ int usuario() {
     return codigo;
 }
 
+// Função utilizada para verificar se o código de produto está dentro do esperado.
 bool validaProduto(int codigo) {
     return (codigo >= 0 && codigo < MAX_PRODUTO);
 }
 
+// Interface de administração
 void administracao() {
     string senha;
     cout << "Digite a senha de administrador: (admin) ";
@@ -401,13 +405,12 @@ void administracao() {
 
     // Verifica se a senha está correta
     if (senha != ADMIN_PASSWORD) {
-        cout << "Senha incorreta. Voltando ao menu principal..." << endl;
         return;
     }
 
     cout << "Acesso autorizado!" << endl;
     while (true) {
-		//limpaTela();
+
         cout << "\nMenu de Administração:" << endl;
         cout << "1. Cadastro de Produtos" << endl;
         cout << "2. Mostrar Estoque" << endl;
@@ -443,7 +446,6 @@ void administracao() {
             case 0:
                 cout << "Encerrando menu de Administração..." << endl;
                 limpaTela();
-				//usuario();
                 return;
             default:
                 cout << "Opção inválida. Tente novamente." << endl;
