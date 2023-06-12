@@ -24,7 +24,8 @@ Caso o valor não seja suficiente, o usuário deverá complementar (em uma vendi
   
 Ao realizar a venda, o programa verificará:
 - Se existe estoque do produto solicitado
-- Se o usuário informou valor suficiente para pagar pelo produto
+- Se o usuário informou valor suficiente para pagar pelo produto  
+  
 Atendidas as 2 condições acima, será realizada:
 - A baixa de estoque
 - Soma do valor da venda no faturamento da máquina
@@ -43,7 +44,7 @@ Na interface de administração, o usuário poderá realizar:
 #### Cadastramento de produtos
 O cadastramento dos produtos será realizado com a inclusão do código do produto, nome, preço e quantidade.  
 O código de produto é um valor inteiro definido entre 01 e 49 (esse valor é ajustável no código fonte).  
-O nome do produto não foi limitado, mas a interface está preparada para até 20 caracteres na exibição do estoque
+O nome do produto não foi limitado, mas a interface está preparada para até 20 caracteres na exibição do estoque.  
 Para o valor, deverá ser utilizado . (ponto) como separador decimal.  
 A rotina de cadastramento se repete até o usuário digitar "fim".  
   
