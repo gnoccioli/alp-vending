@@ -50,14 +50,14 @@ void relatorioFinanceiro() {
     cout << "\nRelatório Financeiro" << endl;
     cout << "--------------------" << endl;
 
-    cout << "Saldo das vendas realizadas: R$" << fixed << setprecision(2) << valorTotalVendas << endl;
+    cout << "Faturamento com as vendas realizadas: R$" << fixed << setprecision(2) << valorTotalVendas << endl;
 
     double valorTotalEstoque = 0.0;
     for (int i = 0; i < conta_produto; i++) {
         valorTotalEstoque += produto[i].valor * produto[i].quantidade;
     }
 
-    cout << "Valor total do estoque disponível: R$" << fixed << setprecision(2) << valorTotalEstoque << endl;
+    cout << "Faturamento previsto com o estoque disponível: R$" << fixed << setprecision(2) << valorTotalEstoque << endl;
 }
 
 void retiraSaldo(double& valorTotalVendas) {
@@ -74,7 +74,9 @@ void retiraSaldo(double& valorTotalVendas) {
     }
 }
 
+// A função estoque recebe como parâmetro a informação se ela foi chamada por administrador ou por usuário
 void estoque(bool admin) {
+	// Se não existir estoque para venda, é chamado o menu de administração
     if (conta_produto == 0) {
         cout << "Sem produtos em estoque." << endl;
         administracao();
@@ -83,15 +85,18 @@ void estoque(bool admin) {
 	cout << "-------------------" << endl;
 	double valorTotal = 0.0;
 	int quantidadeTotal = 0;
+	// Imprime o cabeçalho da tabela de estoque
 	cout << left << setw(7) << setfill(' ')  << "Código" << " | "
 				 << setw(20) << setfill(' ') << "Nome"   << " | "
 				 << setw(8) << setfill(' ')  << "Preço R$" << " | "
 											 << "Quantidade " ;
+	// Se a função foi chamada pelo administrador, exibe também o valor total de cada item
 	if (admin)
 		cout << " | Total";
 
 	cout << endl;
 
+	// Imprime a tabela de estoque
 	for (int i = 0; i < conta_produto; i++) {
 		cout << right << "  " 
 					<< setw(2)  << setfill('0') << produto[i].codigo << "  " << " | "
@@ -99,6 +104,7 @@ void estoque(bool admin) {
 			<< right << setw(8)  << setfill(' ') << fixed << setprecision(2) << produto[i].valor << " | "
 			<< "    " << setw(2)  << setfill(' ') << produto[i].quantidade;
 
+	// Se a função foi chamada pelo administrador, exibe também o valor total de cada item
 		if (admin)
 			cout << setw(8)  << " | " << produto[i].valor * produto[i].quantidade;
 
@@ -106,11 +112,12 @@ void estoque(bool admin) {
 		quantidadeTotal += produto[i].quantidade;
 		valorTotal += produto[i].valor * produto[i].quantidade;
 	}
+
+	// Se a função foi chamada pelo administrador, exibe também a quantidade de itens em inventario e o valor total do estoque
 	if (admin) {
 		cout << "-------------------" << endl;
 		cout << "Total de itens em estoque: " << fixed << quantidadeTotal << endl;
 		cout << "Valor total em estoque: R$ " << fixed << setprecision(2) << valorTotal << endl;
-		//cin.ignore(numeric_limits<streamsize>::max(), '\n');
 	}
 }
 
@@ -123,17 +130,20 @@ void reposicaoEstoque() {
 
 		estoque(true); // Exibe o estoque atual na tela. O parâmetro true indica que é execução do administrador.
 
-
         cout << "\nDigite o código do produto que deseja repor (ou 'fim' para sair): ";
         cin >> entrada;
         cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Limpa o buffer de entrada
 
+        // Verifica se o usuário deseja sair da rotina de reposição de estoque
         if (entrada == "fim") {
             cout << "Encerrando reposição de estoque..." << endl;
             break;
         }
 
         int codigo;
+
+		// O valor informado pelo usuário é convertivo de str para int.
+		// Se resultar em erro, é solicitada nova entrada de dados.
         try {
             codigo = stoi(entrada);
         } catch (...) {
@@ -162,6 +172,8 @@ void reposicaoEstoque() {
 
         cout << "Digite a quantidade a ser acrescentada para o produto '" << produto[indice].nome << "': ";
         int quantidade;
+		
+		// Recebe do usuário a quantidade a ser acrescentada no estoque. Caso não seja um valor válido, é solicitado novamente.
         if (!(cin >> quantidade)) {
             cout << "Entrada inválida. Insira um valor numérico." << endl;
             cin.clear();
@@ -268,7 +280,7 @@ void cadastroProdutos() {
 }
 
 void vendaProduto(int codigo) {
-    // Verificar se o produto existe
+    // Verifica se o produto existe
     int indiceProduto = -1;
     for (int i = 0; i < conta_produto; i++) {
         if (produto[i].codigo == codigo) {
@@ -286,7 +298,7 @@ void vendaProduto(int codigo) {
 
     Produto produtoVendido = produto[indiceProduto];
 
-    // Verificar se há estoque suficiente
+    // Verifica se há estoque suficiente
     if (produtoVendido.quantidade == 0) {
         cout << "Produto indisponível no momento. Aperte enter para continuar" << endl;
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -296,7 +308,7 @@ void vendaProduto(int codigo) {
 
     cout << "Produto selecionado: " << produtoVendido.nome << endl;
 
-    // Solicitar ao usuário para inserir o dinheiro na máquina
+    // Solicita ao usuário para inserir o dinheiro na máquina
     double valorInserido = 0.0;
     double valorTotal = 0.0;
     while (valorTotal < produtoVendido.valor) {
